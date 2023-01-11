@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "249018482891",
+    "project_id": "weather-iot-firebase",
+    "storage_bucket": "weather-iot-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249018482891:android:d2a970b87b6ae5d5e15b4e",
+        "android_client_info": {
+          "package_name": "com.example.iot_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249018482891-0h3au1thvl3eqh6pi5758t98oci1mfpf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcEzPZgQxr9-JyKMbAI3j5m9I3wG-rnFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249018482891-0h3au1thvl3eqh6pi5758t98oci1mfpf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
