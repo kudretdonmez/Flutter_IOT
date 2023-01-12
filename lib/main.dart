@@ -69,66 +69,52 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            //Text('Temperature is: $temp'),
-            //Text('Humidity is: $hum'),
             SleekCircularSlider(
               appearance: CircularSliderAppearance(
-                  customWidths: CustomSliderWidths(trackWidth: 4, progressBarWidth: 20, shadowWidth: 40),
+                  customWidths: CustomSliderWidths(trackWidth: 4, progressBarWidth: 25),
                   customColors: CustomSliderColors(
-                      //trackColor: HexColor('#ef6c00'),
-                      //progressBarColor: HexColor('#ffb74d'),
-                      //shadowColor: HexColor('#ffb74d'),
-                      shadowMaxOpacity: 0.5, //);
-                      shadowStep: 20),
+                    shadowColor: Colors.grey,
+                    trackColor: Colors.orangeAccent[700],
+                    progressBarColor: Colors.amber,
+                  ),
                   infoProperties: InfoProperties(
-                      bottomLabelStyle: const TextStyle(
-                          //color: HexColor('#6DA100'),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
+                      bottomLabelStyle:
+                          TextStyle(color: Colors.greenAccent[700], fontSize: 20, fontWeight: FontWeight.w600),
                       bottomLabelText: 'Temp.',
-                      mainLabelStyle: const TextStyle(
-                          //color: HexColor('#54826D'),
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w600),
+                      mainLabelStyle: TextStyle(color: Colors.teal[700], fontSize: 30.0, fontWeight: FontWeight.w600),
                       modifier: (double value) {
                         return '$temp ˚C';
                       }),
                   startAngle: 90,
                   angleRange: 360,
-                  size: 200.0,
+                  size: 250.0,
                   animationEnabled: true),
               min: 0,
               max: 50,
               initialValue: temp,
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             SleekCircularSlider(
               appearance: CircularSliderAppearance(
-                  customWidths: CustomSliderWidths(trackWidth: 4, progressBarWidth: 20, shadowWidth: 40),
+                  customWidths: CustomSliderWidths(trackWidth: 4, progressBarWidth: 25),
                   customColors: CustomSliderColors(
-                      //trackColor: HexColor('#0277bd'),
-                      //progressBarColor: HexColor('#4FC3F7'),
-                      //shadowColor: HexColor('#B2EBF2'),
-                      shadowMaxOpacity: 0.5, //);
-                      shadowStep: 20),
+                    shadowColor: Colors.grey,
+                    trackColor: Colors.indigo[900],
+                    progressBarColor: Colors.blueAccent[400],
+                  ),
                   infoProperties: InfoProperties(
-                      bottomLabelStyle: const TextStyle(
-                          //color: HexColor('#6DA100'),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
+                      bottomLabelStyle:
+                          TextStyle(color: Colors.greenAccent[700], fontSize: 20, fontWeight: FontWeight.w600),
                       bottomLabelText: 'Humidity.',
-                      mainLabelStyle: const TextStyle(
-                          //color: HexColor('#54826D'),
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w600),
+                      mainLabelStyle: TextStyle(color: Colors.teal[700], fontSize: 30.0, fontWeight: FontWeight.w600),
                       modifier: (double value) {
                         return '$hum %';
                       }),
                   startAngle: 90,
                   angleRange: 360,
-                  size: 200.0,
+                  size: 250.0,
                   animationEnabled: true),
               min: 0,
               max: 100,
