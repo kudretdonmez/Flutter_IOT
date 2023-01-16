@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late List<LiveData> chartData;
+  late ChartSeriesController _chartSeriesController;
+
   late DatabaseReference _dbref;
   var temp;
   var hum;
@@ -41,6 +45,33 @@ class _HomePageState extends State<HomePage> {
     _dbref = FirebaseDatabase.instance.ref();
     tempChange();
     humChange();
+    chartData = getChartData();
+    Timer.periodic(const Duration(milliseconds: 500), updateDataSource);
+  }
+
+  List<LiveData> getChartData() {
+    return <LiveData>[
+      LiveData(0, 0),
+      LiveData(1, 0),
+      LiveData(2, 0),
+      LiveData(3, 0),
+      LiveData(4, 0),
+      LiveData(5, 0),
+      LiveData(6, 0),
+      LiveData(7, 0),
+      LiveData(8, 0),
+      LiveData(9, 0),
+    ];
+  }
+
+  int time = 10;
+  void updateDataSource(Timer timer) {
+    chartData.add(LiveData(time++, temp));
+    chartData.removeAt(0);
+    _chartSeriesController.updateDataSource(
+      addedDataIndex: chartData.length - 1,
+      removedDataIndex: 0,
+    );
   }
 
   @override
@@ -69,56 +100,33 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SleekCircularSlider(
-              appearance: CircularSliderAppearance(
-                  customWidths: CustomSliderWidths(trackWidth: 4, progressBarWidth: 25),
-                  customColors: CustomSliderColors(
-                    shadowColor: Colors.grey,
-                    trackColor: Colors.orangeAccent[700],
-                    progressBarColor: Colors.amber,
-                  ),
-                  infoProperties: InfoProperties(
-                      bottomLabelStyle:
-                          TextStyle(color: Colors.greenAccent[700], fontSize: 20, fontWeight: FontWeight.w600),
-                      bottomLabelText: 'Temp.',
-                      mainLabelStyle: TextStyle(color: Colors.teal[700], fontSize: 30.0, fontWeight: FontWeight.w600),
-                      modifier: (double value) {
-                        return '$temp ˚C';
-                      }),
-                  startAngle: 90,
-                  angleRange: 360,
-                  size: 250.0,
-                  animationEnabled: true),
-              min: 0,
-              max: 50,
-              initialValue: temp,
-            ),
             const SizedBox(
               height: 30,
             ),
-            SleekCircularSlider(
-              appearance: CircularSliderAppearance(
-                  customWidths: CustomSliderWidths(trackWidth: 4, progressBarWidth: 25),
-                  customColors: CustomSliderColors(
-                    shadowColor: Colors.grey,
-                    trackColor: Colors.indigo[900],
-                    progressBarColor: Colors.blueAccent[400],
-                  ),
-                  infoProperties: InfoProperties(
-                      bottomLabelStyle:
-                          TextStyle(color: Colors.greenAccent[700], fontSize: 20, fontWeight: FontWeight.w600),
-                      bottomLabelText: 'Humidity.',
-                      mainLabelStyle: TextStyle(color: Colors.teal[700], fontSize: 30.0, fontWeight: FontWeight.w600),
-                      modifier: (double value) {
-                        return '$hum %';
-                      }),
-                  startAngle: 90,
-                  angleRange: 360,
-                  size: 250.0,
-                  animationEnabled: true),
-              min: 0,
-              max: 100,
-              initialValue: hum,
+            SizedBox(
+              height: 350,
+              child: SfCartesianChart(
+                legend: Legend(isVisible: true),
+                series: [
+                  LineSeries(
+                    dataSource: chartData,
+                    xValueMapper: (LiveData data, _) => data.time,
+                    yValueMapper: (LiveData data, _) => data.temp,
+                  )
+                ],
+                primaryXAxis: NumericAxis(
+                  majorGridLines: const MajorGridLines(width: 1),
+                  edgeLabelPlacement: EdgeLabelPlacement.shift,
+                  interval: 2,
+                  title: AxisTitle(text: 'Time(seconds)'),
+                ),
+                primaryYAxis: NumericAxis(
+                  majorGridLines: const MajorGridLines(width: 1),
+                  edgeLabelPlacement: EdgeLabelPlacement.shift,
+                  interval: 2,
+                  title: AxisTitle(text: 'Temperature(Celcius)'),
+                ),
+              ),
             ),
             const SizedBox(
               height: 30,
@@ -155,4 +163,11 @@ class AppBarText {
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.bold,
   );
+}
+
+class LiveData {
+  final int time;
+  var temp;
+
+  LiveData(this.time, this.temp);
 }
